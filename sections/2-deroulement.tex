@@ -1,11 +1,90 @@
 \chapter{Déroulement du Stage}
 \label{main}
 
+% -=+=-
+% RESUME
+% -=+=-
+
 \section{Information sur le sujet}
 
-Les différents papiers, le résumé, la répo github
+Pour pouvoir debuter le stage correctement, il était nécessaire de s'informer correctement sur le sujet traité et les sujets adjascents.
+Il était aussi important de pouvoir se familiariser avec les usages des publication scientifique, de pouvoir s'entraîner a correctement
+lire ce genre de publications.
+C'est pourquoi on m'as proposer plusieurs articles à décortiquer, que j'ai résumé simplement, tout au long du stage.
 
+\subsection{Format et Rendu}
+
+Le format de résumé que j'ai choisi est ASCIIDOC, qui permet un formattage similaire à Markdown (avec un peu plus de possibilités), et une exportation facile en HTLM grâce à asciidoctor.
+
+Les sources de ces documents sont hébergées sur une repository mise à ma disposition sur le groupe GitHub du PROGRESS:
+\url{https://github.com/labri-progress/llm-study-zoo}
+
+L'affichage Github n'éttant pas complet (n'affiche pas les documents importés, entre autres), j'ai décidé de rendre disponible un version rendue
+\href{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/}{sur ma page CREMI}.
+
+
+\subsection{Résumés}
+
+Cette section passera rapidement sur les différents sujets présentés dans les articles que l'on m'a confié, ainsi que ce qui a pu etre tiré de l'article pour etre employé au cours du stage.
+Pour des résumés plus détaillés, il est préférable d'aller voir \href{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/}{le rendu html sur ma pas CREMI}
+
+
+\subsubsection{Empirical study on Code Completion Tools \cite{evalcodecompquality}}
+
+Cet article présente une expérience de comparaison de performances entre
+3 modèles de complétions sur un dataset de petites fonction avec leurs documentation.
+
+Ce type d'experience m'as permi de voir le type d'expérimentation possible pour ce genre d'outils ainsi que
+les types de mesures qui puissent être utilisées.
+
+
+\subsubsection{Offline evaluation of Code Completion Tools \cite{llm-online-offline}}
+
+Cet article présente une expérience de comparaison de performances entre
+3 modèles de complétions, cette fois-ci open-sources, sur \href{https://github.com/VHellendoorn/Code-LMs#datasets}{un dataset multilangues}
+
+Comme le précendent, il s'agit ici de voir la mise en placce de l'expérience et les metrics.
+
+
+\subsubsection{Online evaluation of Code Completion Tools \cite{llm-online-offline}}
+
+Cette section fait partie de l'article précendant, il s'agit de la deuxième partie de l'expérience.
+Il s'agit ici d'évaluer d'un point de vue qualitatif et quantitatif les différents modèles "dans la nature",
+c'est à dire directement en les testant auprès de développeurs pendant leurs sessions de travail.
+
+On est ici sur un expérience plus proche que ce qui peut nous interesser pour notre sujet: une expérimentation avec directement sur des développeurs.
+
+
+\subsubsection{Grounded Copilot: How Programmers Interact with Code-Generating Models \cite{grouded}}
+
+Cette publication m'as été proposée car c'est une "grounded theory".
+Ce type de publication cherche à faire emmerger des hypothèses à partir de données récolté sur un expérience.
+
+Ici les chercheurs on mis en avant différents états pendant la phase de développement.
+Il pourrait-être interressant de les faire resortir dans nos expérience, et d'integrer cette différenciation de phases dans l'analyse des données.
+
+
+\subsubsection{CodeAid: A classroom deployment of an LLM-based programming assistant \cite{codeaid}}
+
+Il s'agit ici d'une expérience mise en place sur une classe universitaire durant un semestre visant a observer les comportement des étudiants
+face à un outils d'assistance à la programmation.
+Cet article est très intéressant, il nous permet de voir le type d'expériences qui peut etre mener pour notre projet, ce qu'il est possible de mettre en place.
+
+
+\subsubsection{Productivity Assessment of Neural Code Completion \cite{productivity-assess}}
+
+Cet article est l'un des dernier que j'ai traité, le résumé n'est pas complet, cependant, il nous a renseigné sur la manière dont on peut
+quantifier la productivité (ressentie) grâce au taux d'acceptation des complétions proposées par les extensions.
+
+% -=+=-
+% CODEGRITS
+% -=+=-
+
+\newpage
 \section{Prise en main de CodeGRITS}
+
+CodeGRITS est un outils d'enregistement pour des sessions de développement sous IntelliJ IDEA (et IDE dérivés), Il m'a été proposé par mes encadrant comme un
+piste potentielle pour pouvoir enregister les intéractions avec les models/extensions de completion de code assités par IA.
 
 Fork de CodeGRITS, fix pour bon fonctionnement, exploration des données récupérables
 
@@ -20,3 +99,7 @@ Exploration des prossibilité, décompilation de Copilot, intégration au fork d
 \section{Analyse des données}
 
 Lecture et structuration des données, création de graphs avec matplotlib, exploration de librairies plus intéractives (d3js, plotly)
+
+\section{Soutenances de thèses (bonus)}
+
+Vers la fin du mois de juin, j'ai pu assister a deux soutenances de thèses au sein du LaBRI.
