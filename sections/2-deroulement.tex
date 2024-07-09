@@ -1,6 +1,9 @@
 \chapter{Déroulement du Stage}
 \label{main}
 
+Cette section va présenter les différentes tâches accomplies au cours de la période de stage.
+Celles-ci ne sont globalement pas présentées dans un ordre chronologique, elles sont simplement regoupées de manière logique.
+
 % -=+=-
 % RESUME
 % -=+=-
@@ -173,11 +176,64 @@ Plusieurs pistes on été envisagées, comme intercepter le traffic réseau entr
 Une approche beaucoup plus simple consistait à regarder les \emph{inlays} qui apparaissent dans l'éditeur,
 c'est à dire les petits textes virtuels qui viennent donner des indications directement dans le viewport de l'éditeur de fichier,
 comme par exemple le nom des paramêtre des fonctions, etc.
+Ces \emph{inlays} sont gérés pour chaque fichier ouvert par un \emph{InlayModel}, auquel on peut attacher un listener afin de réagir
+à la création / modification / destruction de ces inlays (voir Figure \ref{inlay-listener}).
+
+Cependant, un fois cet accès acquit, il faut pouvoir récuperer les informations qui nous intéressent, ici le code proposé par GitHub Copilot.
+Pour ce faire, il faut pouvoir détécter quel inlay nous intéresse, et récuperer les informations au bon endroit.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=10cm]{images/inlay-listener.png}
+	\caption{Ajout d'un listener lors de l'ouverture d'un fichier}
+	\label{inlay-listener}
+\end{figure}
+
 
 \subsubsection{Decompilation de Copilot}
 
 GitHub Copilot n'étant pas du logiciel libre, il est impossible de regarder sont code de manière direct dur un depot publique, il faut donc trouver un autre moyens.
 Heureusement, IntelliJ IDEA étant construit avec des technologies utilisant Java et la JVM, ses plugins aussi, il est donc possible de facilement décompiler l'extension afin de s'assurer de son fonctionnement.
+
+Gâce à l'outil open source \emph{\href{https://java-decompiler.github.io/}{Java Decompiler}}, il est possible de retranscrir du bytecode executable par la JVM en code source java lisible (exemple Figure \ref{copilot-inlay-renderer}).
+Sur l'image \ref{copilot-inlay-renderer}, on peut y voir une partie du code décompilé qui nous sera utile dans notre contexte: il s'agit du champ contenant le text qui s'affiche dans l'éditeur
+quand Copilot veut nous suggerer quelque chose.
+
+Comme on peut voir, il s'agit d'un champ privé, tout comme la classe qui l'abrite, mais java nous permet tout de même d'y acceder par des moyens détournés.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=10cm]{images/copilot-renderer-class.png}
+	\caption{decompiled class of the inlay renderer in copilot's intellij plugin}
+	\label{copilot-inlay-renderer}
+\end{figure}
+
+
+\subsubsection{Manipulation de la JVM}
+
+Java est un language orienté objet, qui est compilé et éxécuté au sein d'un machine virtuelle, la JVM.
+Les différentes visibilité des objets ne sont pas forcement garanties pendant l'execution du code comme elles le sont à la compilation.
+Il est donc possible, en passant par des objets de la librairies standarde de Java, d'accèder à des champs privés de classes privés présentes
+dans le contexte de la JVM courrante.
+
+Dans l'adaptation de CodeGRITS que j'ai réalisé, je suis simplement allé chercher le champ \lstinline{lines} de l'objet renderer si il existait (voir \ref{getting-the-lines}).
+Pour faire celà, Java propose dans la class \emph{Class<T>} un méthode permettant d'optenir un champ déclaré: \lstinline{getDeclaredField(String name)}.
+Celle-ci nous permet d'intéragir avec le champ et de nottament modifier son accessibilité, et suite à quoi il est possible, peu importe la visibilité originale du champ,
+d'acceder aux données qu'il renferme.
+
+Ce procédé peut toutefois generer des exceptions d'accès illégal, d'où la présence d'un bloque \emph{try/catch} sur l'image \ref{getting-the-lines}.
+Ettonement, pendant l'utilisation de cette modification, aucune de ces erreur ne m'as été renvoyée, il semblerai donc que cette methode fonctionne correctement.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=15cm]{images/getting-the-lines.png}
+	\caption{Récupération des données dans l'objet renderer de Copilot}
+	\label{getting-the-lines}
+\end{figure}
+
+% -=+=-
+% DATA
+% -=+=-
 
 \section{Analyse des données}
 
