@@ -139,9 +139,9 @@ L'extension récupère des données sur la session de développement et les enge
 Il a fallu donc décortiquer la structure de ce dossier et des fichiers qui y sont contenus. Heureusement, ces données sont faite pour être facilement exploitables, la structure du dossier est donc très explicite:
 
 \begin{itemize}
-	\item Un dossier \lstinline{archives} contenant des sauvegardes des fichiers sources modifiés
-	\item Un dossier \lstinline{screen_recording} contenant un fichier video de l'écran pendant la session
-	\item Un fichier \lstinline{ide_tracking.xml} contenant différents événements émanant de l'éditeur pendant la session
+  \item Un dossier \lstinline{archives} contenant des sauvegardes des fichiers sources modifiés
+  \item Un dossier \lstinline{screen_recording} contenant un fichier video de l'écran pendant la session
+  \item Un fichier \lstinline{ide_tracking.xml} contenant différents événements émanant de l'éditeur pendant la session
 \end{itemize}
 
 Ce qui nous intéresse là dedans sont les données contenues dans les fichier xml, car c'est ici qu'il peut y avoir des évenements pertinants dans le contexte de Copilot.
@@ -150,17 +150,17 @@ Malheureusement, celà n'as pas été completement le cas: En effet, seul un év
 (voir figure \ref{apply-inlay-action}) n'est enregisté.
 
 \begin{figure}
-	\centering
-	\includegraphics[width=7cm]{images/codegrits-wrong-version.png}
-	\caption{Commande limittant les version utilisable d'IntelliJ}
-	\label{codegrits-old-build-version}
+  \centering
+  \includegraphics[width=7cm]{images/codegrits-wrong-version.png}
+  \caption{Commande limittant les version utilisable d'IntelliJ}
+  \label{codegrits-old-build-version}
 \end{figure}
 
 \begin{figure}
-	\centering
-	\includegraphics[width=10cm]{images/apply-inlay-action.png}
-	\caption{Entrée du fichier \lstinline{ide_tracking.xml} référant à un évenement de complétion accéptée}
-	\label{apply-inlay-action}
+  \centering
+  \includegraphics[width=10cm]{images/apply-inlay-action.png}
+  \caption{Entrée du fichier \lstinline{ide_tracking.xml} référant à un évenement de complétion accéptée}
+  \label{apply-inlay-action}
 \end{figure}
 
 
@@ -183,10 +183,10 @@ Cependant, un fois cet accès acquit, il faut pouvoir récuperer les information
 Pour ce faire, il faut pouvoir détécter quel inlay nous intéresse, et récuperer les informations au bon endroit.
 
 \begin{figure}
-	\centering
-	\includegraphics[width=10cm]{images/inlay-listener.png}
-	\caption{Ajout d'un listener lors de l'ouverture d'un fichier}
-	\label{inlay-listener}
+  \centering
+  \includegraphics[width=10cm]{images/inlay-listener.png}
+  \caption{Ajout d'un listener lors de l'ouverture d'un fichier}
+  \label{inlay-listener}
 \end{figure}
 
 
@@ -202,10 +202,10 @@ quand Copilot veut nous suggerer quelque chose.
 Comme on peut voir, il s'agit d'un champ privé, tout comme la classe qui l'abrite, mais java nous permet tout de même d'y acceder par des moyens détournés.
 
 \begin{figure}
-	\centering
-	\includegraphics[width=10cm]{images/copilot-renderer-class.png}
-	\caption{decompiled class of the inlay renderer in copilot's intellij plugin}
-	\label{copilot-inlay-renderer}
+  \centering
+  \includegraphics[width=10cm]{images/copilot-renderer-class.png}
+  \caption{decompiled class of the inlay renderer in copilot's intellij plugin}
+  \label{copilot-inlay-renderer}
 \end{figure}
 
 
@@ -225,20 +225,77 @@ Ce procédé peut toutefois generer des exceptions d'accès illégal, d'où la p
 Ettonement, pendant l'utilisation de cette modification, aucune de ces erreur ne m'as été renvoyée, il semblerai donc que cette methode fonctionne correctement.
 
 \begin{figure}
-	\centering
-	\includegraphics[width=15cm]{images/getting-the-lines.png}
-	\caption{Récupération des données dans l'objet renderer de Copilot}
-	\label{getting-the-lines}
+  \centering
+  \includegraphics[width=15cm]{images/getting-the-lines.png}
+  \caption{Récupération des données dans l'objet renderer de Copilot}
+  \label{getting-the-lines}
 \end{figure}
 
 % -=+=-
 % DATA
 % -=+=-
 
+\newpage
 \section{Analyse des données}
 
-Lecture et structuration des données, création de graphs avec matplotlib, exploration de librairies plus intéractives (d3js, plotly)
+Afin de pouvoir tirer profit des données produites par CodeGRITS, il a fallut chercher des outils permettant de lire et d'afficher les données produites.
 
+Les données pertinantes pour nous sont celles des événements de GitHub Copilot, et ceux-ci sont présents dans le fichier ide\_tracking.xml.
+
+\subsection{Parsing}
+
+Dans un premier temps, je me suis intéressé au librairies de l'ecosystem Rust pour lire et afficher les données (nottement \emph{serde} et \emph{plotters}),
+mais il s'avère que ce n'était vraiment pas pratique pour ce que l'ont veut en faire.
+
+Je me suis donc rabattu sur Python, qui possède un très solide arsenal pour l'analyse de données, nottament grâce aux fameuses librairies \emph{numpy} et \emph{pandas}.
+De plus, la déserialisation des fichiers XML est déja incluse dans la libraries standarde du language, gâce à \href{https://docs.python.org/3/library/xml.etree.elementtree.html}{xml.etree.ElementTree},
+ce qui le rends beaucoup plus pratique.
+Ce module permet aussi d'acceder aux elements du document xml en utilisant xpath.
+
+\subsection{Plotting}
+
+Pour l'affichage des donées, nous nous somme donner l'objectif de les présenter sous la forme d'une timeline, avec des événements de GitHub Copilot (propositions et acceptations).
+
+La première approche à été de simplement le présenter avec \emph{matplotlib}, un module python très utilisé dans la communauté scientifique.
+Malheureusement, les graphs qui en résultent sont seulement des images, et ne sont donc pas intéractifs et difficilement lisible, comme on peut le constater sur l'image \ref{matplotlib-timeline},
+qui est un morceau d'un graph résultant d'une session de développement test.
+
+Pour pouvoir acceder a plus d'interactibilité, on m'as donc orienté vers des librairies javascript tel que \href{https://d3js.org}{d3js}.
+Malheureusement, beaucoup ne proposent pas de module permettant de generer des timeline comme nous voulions, et les quelques debot git qui semblaient pouvoir nous aider étaient abandonés depuis longtemps
+et ne semblaient pas etre facilement utilisable (dépendant de version trop anciennes).
+
+Malgrès ça, j'ai finalement trouvé \href{https://plotly.com/python/}{plotly} qui permet de créer exactement le type de timeline dont nous avont besoin (voir image \ref{cool-plot}),
+c'est à dire un visuel où tout les événements on leur couleur propre, que l'on puisse zoomer et regarder des détails pour chaque événement en cliquant dessus.
+C'est un bon début ici, mais il serait bien plus intéressant de pouvoir pousser la visualisation plus loin, afin d'avoir une vue d'ensemble plus facile à comprendre au premier coup d'oeuil
+(voir les travaux de Roberto Milleni \cite{cool-plot} à l'image \ref{ref-timeline}).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{images/matplotlib-timeline.png}
+  \caption{Récupération des données dans l'objet renderer de Copilot}
+  \label{matplotlib-timeline}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{images/cool-plot.png}
+  \caption{Aperçu de la visualisation plotly}
+  \label{cool-plot}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=15cm]{images/ref-timeline.png}
+  \caption{Inspiration du model de timeline \cite{cool-plot}}
+  \label{ref-timeline}
+\end{figure}
+
+% -=+=-
+% THESIS
+% -=+=-
+
+\newpage
 \section{Soutenances de thèses (bonus)}
 
 Vers la fin du mois de juin, j'ai pu assister a deux soutenances de thèses au sein du LaBRI.
+Celle de Christophe CASSEAU \cite{these-casseau}, et celle de Corentin LATAPPY \cite{these-latappy}.
