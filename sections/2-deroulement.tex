@@ -2,7 +2,7 @@
 \label{main}
 
 Cette section va présenter les différentes tâches accomplies au cours de la période de stage.
-Celles-ci ne sont globalement pas présentées dans un ordre chronologique, elles sont simplement regoupées de manière logique.
+Celles-ci ne sont globalement pas présentées dans un ordre chronologique, elles sont simplement regoupées par thèmes.
 
 % -=+=-
 % RESUME
@@ -10,26 +10,26 @@ Celles-ci ne sont globalement pas présentées dans un ordre chronologique, elle
 
 \section{Information sur le sujet}
 
-Pour pouvoir debuter le stage correctement, il était nécessaire de s'informer correctement sur le sujet traité et les sujets adjascents.
+Pour pouvoir débuter le stage correctement, il était nécessaire de s'informer correctement sur le sujet traité et les sujets adjascents.
 Il était aussi important de pouvoir se familiariser avec les usages des publication scientifique, de pouvoir s'entraîner a correctement
 lire ce genre de publications.
 C'est pourquoi on m'as proposer plusieurs articles à décortiquer, que j'ai résumé simplement, tout au long du stage.
 
 \subsection{Format et Rendu}
 
-Le format de résumé que j'ai choisi est ASCIIDOC, qui permet un formattage similaire à Markdown (avec un peu plus de possibilités), et une exportation facile en HTLM grâce à asciidoctor.
+Le format de résumé que j'ai choisi est ASCIIDOC, qui permet un formattage similaire à Markdown (avec un peu plus de possibilités), et une exportation facile en HTLM grâce à \href{https://asciidoctor.org/}{asciidoctor}.
 
-Les sources de ces documents sont hébergées sur une repository mise à ma disposition sur le groupe GitHub du PROGRESS:
+Les sources de ces documents sont hébergées sur un dépot mise à ma disposition sur le groupe GitHub du groupe PROGRESS:
 \url{https://github.com/labri-progress/llm-study-zoo}
 
-L'affichage Github n'éttant pas complet (n'affiche pas les documents importés, entre autres), j'ai décidé de rendre disponible un version rendue
-\href{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/}{sur ma page CREMI}.
+L'affichage Github n'éttant pas complet (n'affiche pas les documents importés et les formules mathématiques, entre autres), j'ai décidé de rendre disponible un version rendue sur ma page CREMI:
+\url{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/}.
 
 
 \subsection{Résumés}
 
 Cette section passera rapidement sur les différents sujets présentés dans les articles que l'on m'a confié, ainsi que ce qui a pu etre tiré de l'article pour etre employé au cours du stage.
-Pour des résumés plus détaillés, il est préférable d'aller voir \href{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/}{le rendu html sur ma pas CREMI}
+Pour des résumés plus détaillés, il est préférable d'aller voir \href{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/}{le rendu html sur ma page CREMI}
 
 
 \subsubsection{Empirical study on Code Completion Tools \cite{evalcodecompquality}}
@@ -44,9 +44,9 @@ les types de mesures qui puissent être utilisées.
 \subsubsection{Offline evaluation of Code Completion Tools \cite{llm-online-offline}}
 
 Cet article présente une expérience de comparaison de performances entre
-3 modèles de complétions, cette fois-ci open-sources, sur \href{https://github.com/VHellendoorn/Code-LMs#datasets}{un dataset multilangues}
+3 modèles de complétions, cette fois-ci open-sources, sur \href{https://github.com/VHellendoorn/Code-LMs#datasets}{un dataset multilangues} \cite{dataset-code-lm}.
 
-Comme le précendent, il s'agit ici de voir la mise en placce de l'expérience et les metrics.
+Comme le précendent, il s'agit ici de voir la mise en place de l'expérience et les différents types de mesures.
 
 
 \subsubsection{Online evaluation of Code Completion Tools \cite{llm-online-offline}}
@@ -55,15 +55,15 @@ Cette section fait partie de l'article précendant, il s'agit de la deuxième pa
 Il s'agit ici d'évaluer d'un point de vue qualitatif et quantitatif les différents modèles "dans la nature",
 c'est à dire directement en les testant auprès de développeurs pendant leurs sessions de travail.
 
-On est ici sur un expérience plus proche que ce qui peut nous interesser pour notre sujet: une expérimentation avec directement sur des développeurs.
+On est ici sur un expérience plus proche que ce qui peut nous interesser pour notre sujet: une expérimentation directement avec des développeurs.
 
 
 \subsubsection{Grounded Copilot: How Programmers Interact with Code-Generating Models \cite{grouded}}
 
 Cette publication m'as été proposée car c'est une "grounded theory".
-Ce type de publication cherche à faire emmerger des hypothèses à partir de données récolté sur un expérience.
+Ce type de publication cherche à faire emmerger des hypothèses à partir de données récolté sur une expérience.
 
-Ici les chercheurs on mis en avant différents états pendant la phase de développement.
+Ici les chercheurs on mis en avant différents modes d'intéraction vis-à-vis des outils de suggestion comme GitHub Copilot (mode \emph{acceleration} et mode \emph{exploration}).
 Il pourrait-être interressant de les faire resortir dans nos expérience, et d'integrer cette différenciation de phases dans l'analyse des données.
 
 
@@ -72,6 +72,9 @@ Il pourrait-être interressant de les faire resortir dans nos expérience, et d'
 Il s'agit ici d'une expérience mise en place sur une classe universitaire durant un semestre visant a observer les comportement des étudiants
 face à un outils d'assistance à la programmation.
 Cet article est très intéressant, il nous permet de voir le type d'expériences qui peut etre mener pour notre projet, ce qu'il est possible de mettre en place.
+
+Dans cette expérience, les chercheurs on créé une extensions pour éditeur avec une interface ayant plusieurs modes d'interactions.
+L'idée était de voir ce que les étudiants allaient utiliser, et dans quel contexte.
 
 
 \subsubsection{Productivity Assessment of Neural Code Completion \cite{productivity-assess}}
@@ -96,8 +99,8 @@ On a vu dans la séquence précedante quelques article qui utilisait justement c
   \item \textbf{En hébergeant soit-même un modèle}, soit sur un serveur \cite{llm-online-offline}, soit sur la machine du développeur.
 \end{itemize}
 
-Pour des contrainte de temps et de complexité de mise en place, nous somme résté sur la première option et avont utilisé GitHub Copilot, auquel j'ai accès gratuitement de part mon statut d'étudiant.
-De plus, de nombreux autres outils nécessitaient beaucoup de performances à faire tourner, ou ne fonctionnaient pas du tout.
+Pour des contrainte de temps et de complexité de mise en place, nous somme résté sur la première option et avont utilisé GitHub Copilot, auquel j'ai accès gratuitement de part mon statut d'étudiant \cite{gh-students}.
+De plus, de nombreux autres outils nécessitaient beaucoup de performances à faire tourner, nottament pour les models locaux, ou ne fonctionnaient pas du tout.
 
 % -=+=-
 % CODEGRITS
@@ -124,12 +127,12 @@ pour arriver a quelque chose qui nous convienne dans le contexte d'un potentiell
 
 \subsubsection{Mise à jour}
 
-La première étape était de faire foncionner l'extension CodeGRITS en soit.
+La première étape était de faire foncionner l'extension CodeGRITS.
 Celle-ci étant faite pour les IDE IntelliJ antérieurs aux versions 2024 (voir figure \ref{codegrits-old-build-version}), il a fallu l'adapter
 (c.f. commit \href{https://github.com/codegrits/CodeGRITS/commit/cdb10bcba529d050bfcb6c3693256f0e18450dad}{cdb10bc}).
 En effet, afin d'eviter de chercher un moyens de downgrade mon installation d'intellij sur mon environement de travail (installé sous NixOS avec Flatpak),
 j'ai préféré mettre à jour l'extension elle-même.
-Même si celà aurais pû poser de potentiels problèmes de compatibilité, ça aurait été quelque chose d'intéressant à faire, et a proposer aux développeurs
+Même si celà aurais pû poser de potentiels problèmes de compatibilité, nottament avec l'api d'IntelliJ, ça aurait été quelque chose d'intéressant à faire, et a proposer aux développeurs
 de l'extensions pour améliorer leur outil.
 
 
@@ -144,7 +147,7 @@ Il a fallu donc décortiquer la structure de ce dossier et des fichiers qui y so
   \item Un fichier \lstinline{ide_tracking.xml} contenant différents événements émanant de l'éditeur pendant la session
 \end{itemize}
 
-Ce qui nous intéresse là dedans sont les données contenues dans les fichier xml, car c'est ici qu'il peut y avoir des évenements pertinants dans le contexte de Copilot.
+Ce qui nous intéresse là-dedans sont les données contenues dans les fichier xml, car c'est ici qu'il peut y avoir des évenements pertinants dans le contexte de Copilot.
 
 Malheureusement, celà n'as pas été completement le cas: En effet, seul un événement relatif à l'insersion d'un complétion dans le texte source
 (voir figure \ref{apply-inlay-action}) n'est enregisté.
@@ -171,7 +174,7 @@ en modifiant l'extension pour nos usages spécifiques.
 À ce stade, il nous faut un moyens de tracker les moment ou l'extension Copilot viens suggerer du code au développeur, et que celui ci est visible
 en grisé dans l'éditeur.
 
-Plusieurs pistes on été envisagées, comme intercepter le traffic réseau entrant dans l'IDE, mais cela posait beaucoup de problème, nottament avec SSL.
+Plusieurs pistes on été envisagées, comme intercepter le traffic réseau entrant dans l'IDE, mais cela posait beaucoup de problème, nottament avec SSL pour décoder les paquets HTTPS.
 
 Une approche beaucoup plus simple consistait à regarder les \emph{inlays} qui apparaissent dans l'éditeur,
 c'est à dire les petits textes virtuels qui viennent donner des indications directement dans le viewport de l'éditeur de fichier,
@@ -211,7 +214,7 @@ Comme on peut voir, il s'agit d'un champ privé, tout comme la classe qui l'abri
 
 \subsubsection{Manipulation de la JVM}
 
-Java est un language orienté objet, qui est compilé et éxécuté au sein d'un machine virtuelle, la JVM.
+Java est un language orienté objet, qui est compilé et éxécuté au sein d'une machine virtuelle, la JVM.
 Les différentes visibilité des objets ne sont pas forcement garanties pendant l'execution du code comme elles le sont à la compilation.
 Il est donc possible, en passant par des objets de la librairies standarde de Java, d'accèder à des champs privés de classes privés présentes
 dans le contexte de la JVM courrante.
@@ -245,12 +248,12 @@ Les données pertinantes pour nous sont celles des événements de GitHub Copilo
 \subsection{Parsing}
 
 Dans un premier temps, je me suis intéressé au librairies de l'ecosystem Rust pour lire et afficher les données (nottement \emph{serde} et \emph{plotters}),
-mais il s'avère que ce n'était vraiment pas pratique pour ce que l'ont veut en faire.
+mais il s'avère que ce n'était vraiment pas pratique pour ce que l'on veut en faire.
 
 Je me suis donc rabattu sur Python, qui possède un très solide arsenal pour l'analyse de données, nottament grâce aux fameuses librairies \emph{numpy} et \emph{pandas}.
 De plus, la déserialisation des fichiers XML est déja incluse dans la libraries standarde du language, gâce à \href{https://docs.python.org/3/library/xml.etree.elementtree.html}{xml.etree.ElementTree},
 ce qui le rends beaucoup plus pratique.
-Ce module permet aussi d'acceder aux elements du document xml en utilisant xpath.
+Ce module permet aussi d'acceder aux elements du document xml en utilisant la notation xpath.
 
 \subsection{Plotting}
 
@@ -261,18 +264,19 @@ Malheureusement, les graphs qui en résultent sont seulement des images, et ne s
 qui est un morceau d'un graph résultant d'une session de développement test.
 
 Pour pouvoir acceder a plus d'interactibilité, on m'as donc orienté vers des librairies javascript tel que \href{https://d3js.org}{d3js}.
-Malheureusement, beaucoup ne proposent pas de module permettant de generer des timeline comme nous voulions, et les quelques debot git qui semblaient pouvoir nous aider étaient abandonés depuis longtemps
+Malheureusement, beaucoup ne proposent pas de module permettant de generer des timeline comme nous voulions, et les quelques depot git qui semblaient pouvoir nous aider étaient abandonés depuis longtemps
 et ne semblaient pas etre facilement utilisable (dépendant de version trop anciennes).
 
 Malgrès ça, j'ai finalement trouvé \href{https://plotly.com/python/}{plotly} qui permet de créer exactement le type de timeline dont nous avont besoin (voir image \ref{cool-plot}),
 c'est à dire un visuel où tout les événements on leur couleur propre, que l'on puisse zoomer et regarder des détails pour chaque événement en cliquant dessus.
+Vous trouverez un rendu également sur ma page CREMI à l'adresse suivante: \url{https://maxime-pico.emi.u-bordeaux.fr/stage-labri/llm-study-zoo/timeline.html}
 C'est un bon début ici, mais il serait bien plus intéressant de pouvoir pousser la visualisation plus loin, afin d'avoir une vue d'ensemble plus facile à comprendre au premier coup d'oeuil
-(voir les travaux de Roberto Milleni \cite{cool-plot} à l'image \ref{ref-timeline}).
+(voir les travaux de Roberto Milleni \cite{cool-plot} et l'image \ref{ref-timeline}).
 
 \begin{figure}
   \centering
   \includegraphics[width=15cm]{images/matplotlib-timeline.png}
-  \caption{Récupération des données dans l'objet renderer de Copilot}
+  \caption{Première visualisation d'une session avec matplotlib}
   \label{matplotlib-timeline}
 \end{figure}
 
@@ -299,3 +303,5 @@ C'est un bon début ici, mais il serait bien plus intéressant de pouvoir pousse
 
 Vers la fin du mois de juin, j'ai pu assister a deux soutenances de thèses au sein du LaBRI.
 Celle de Christophe CASSEAU \cite{these-casseau}, et celle de Corentin LATAPPY \cite{these-latappy}.
+Ce fut une expérience très enrichissante et motivante pour moi, et m'ont conforté dans l'idée d'aller vers ce chemin d'études.
+Cela sort un peu du contexte du stage, mais il s'agit toujours pour moi de voir comment fonctionne le milieu de la recherche, et ce fut donc de très bonnes opportunités de s'y plonger.
